@@ -1,0 +1,27 @@
+#box{
+margin:50px;
+}
+
+.l{
+    font-size: 0;
+}
+.l>span{
+    border: #999 1px solid;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    LINE-height: 30px;
+    display: inline-block;
+}
+.l>span>input{
+    FONT-SIZE: 25px;
+    border: none;
+    background-color: transparent;
+    WIDTH: 38px;
+    HEIGHT: 38px;
+    LINE-HEIGHT: 38px;
+    TEXT-ALIGN: center;
+    margin: 0px;
+    COLOR: #0000FF;
+    FONT-FAMILY: Verdana;
+}
