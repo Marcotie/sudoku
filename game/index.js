@@ -55,9 +55,22 @@ $(function(){
             }
         }
     }
-    getUnavailableValue(3,4)
+
+    // set value
+    var blockNums = [1,2,3,4,5,6,7,8,9]
     function setValue(row,column){
 
     }
+    var firstOneInBlock = function(){
+        let firstOne = []
+        for(let r=0;r<9;r++){
+            if(r%3==0){
+                firstOne.push([r,0],[r,3],[r,6])
+            }
+        }
+        return firstOne
+    }()
+    console.log("f:",firstOneInBlock)
+
 
 })
