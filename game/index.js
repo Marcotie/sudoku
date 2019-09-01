@@ -10,4 +10,16 @@ $(function(){
     }
     let arr = generateArray();
     console.log("arr:",arr)
+
+    function removeDuplicate(...nums){
+        let res = [];
+        nums.reduce((prev,curr)=>{
+            if(!res.includes(curr)){
+                res.push(curr)
+            }
+        },[])
+        return res;
+    }
+    let r = removeDuplicate(1,3,4,3,3,3)
+    console.log(r)
 })
