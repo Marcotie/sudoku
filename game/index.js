@@ -8,7 +8,6 @@ $(function(){
         })
         return arr;
     }
-    let arr = generateArray();
 
     // remove duplicate
     function removeDuplicate(...nums){
@@ -20,7 +19,6 @@ $(function(){
         },[])
         return res;
     }
-    let r = removeDuplicate(1,3,4,3,3,3)
 
     // get row
     var l0 =$(".l0>span>input")
@@ -32,6 +30,8 @@ $(function(){
     var l6 =$(".l6>span>input")
     var l7 =$(".l7>span>input")
     var l8 =$(".l8>span>input")
+
+    var blockNums = [] // 初始化时，1个九宫格里已经填了的值
 
     // gather nums by position
     function getUnavailableValue(rowIndx,columnIndex){
@@ -49,18 +49,14 @@ $(function(){
         let valueInCurrentColumn = []
         for(let r =0;r<rowIndx;r++){
             let row = eval('l'+r)
-            console.log('row:',row)
             if(row[columnIndex][value]){
                 valueInCurrentColumn.push(row[columnIndex][value])
             }
         }
+        return removeDuplicate(...valueInCurrentRow, ...valueInCurrentColumn)
     }
 
     // set value
-    var blockNums = [1,2,3,4,5,6,7,8,9]
-    function setValue(row,column){
-
-    }
     var firstOneInBlock = function(){
         let firstOne = []
         for(let r=0;r<9;r++){
@@ -70,7 +66,30 @@ $(function(){
         }
         return firstOne
     }()
-    console.log("f:",firstOneInBlock)
+    function setValue(row,column){
+        let inputBox = eval('l'+row)[column]
+        
+        if(firstOneInBlock(row,column)){
+            blockNums = [1,2,3,4,5,6,7,8,9]
+        }
+        let pond = remove([1,2,3,4,5,6,7,8,9],blockNums)
+        let rowColumnAlreadyHaveValue = getUnavailableValue(row,column)
+        let leftNums = remove(pond,rowColumnAlreadyHaveValue)
 
+    }
+    function remove(arr, rest){
+        for(let i in rest){
+            let index = arr.indexOf(rest[i])
+            console.log(i,rest[i],index)
+
+            if(index>-1){
+                arr.splice(index,1)
+            }
+        }
+
+    }
+    let arr = [1,2,3]
+    let r = remove(arr,[1,2])
+    console.log("r:",arr)
 
 })
