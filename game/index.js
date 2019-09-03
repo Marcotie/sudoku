@@ -30,6 +30,15 @@ $(function () {
     var l6 = $(".l6>span>input")
     var l7 = $(".l7>span>input")
     var l8 = $(".l8>span>input")
+    var arr0 = [];
+    var arr1 = [];
+    var arr2 = [];
+    var arr3 = [];
+    var arr4 = [];
+    var arr5 = [];
+    var arr6 = [];
+    var arr7 = [];
+    var arr8 = [];
     var blockNums = []
 
     // gather nums by position
@@ -39,9 +48,8 @@ $(function () {
         let valueInCurrentRow = []
         for (let c = 0; c < columnIndex; c++) {
             let v = currentRow[c].value
-            currentRow[c].value = c
-            if (v && v != 0) {
-                valueInCurrentRow.push(c)
+            if (v && v != 'undefined') {
+                valueInCurrentRow.push(v)
             }
         }
         // column
@@ -49,39 +57,63 @@ $(function () {
         for (let r = 0; r < rowIndx; r++) {
             let row = eval('l' + r)
             let inputBox = row[columnIndex]
-                valueInCurrentColumn.push(inputBox.valu)
-        }
-
-        return removeDuplicate(...valueInCurrentRow, ...valueInCurrentColumn, ...blockNums)
-    }
-
-    // set value
-    var firstOneInBlock = function (row, column) {
-        let firstOne = []
-        if(row==0 || row == 3 || row ==6){
-            let sub = Math.abs(row-column)
-            if(sub == 0 || sub == 3 || sub == 6){
-                return true;
+            if(inputBox.value !='undefined'){
+                valueInCurrentColumn.push(inputBox.value)
             }
         }
-        return false;
+        // block
+        let blockIndex = locateBlock(rowIndx,columnIndex)
+        let currentBlock = eval('arr'+blockIndex)
+        return removeDuplicate(...valueInCurrentRow, ...valueInCurrentColumn, ...arr2string(currentBlock))
     }
-
+    function locateBlock(row,column){
+        let b;
+        if(row>5){
+            if(column>5){
+                b = 8
+            }else if(column>2){
+                b = 7
+            }else{
+                b = 6
+            }
+        }else if(row >2){
+            if(column>5){
+                b = 5
+            }else if(column>2){
+                b = 4
+            }else{
+                b = 3
+            }
+            
+        }else{
+            if(column>5){
+                b = 2
+            }else if(column>2){
+                b = 1
+            }else{
+                b = 0
+            }
+        }
+        return b;
+    }
+    // arr to string
+    function arr2string(arr){
+        for(let i = 0;i<arr.length;i++){
+            arr[i] = String(arr[i])
+        }
+        return arr
+    }
+    // set value
     function setValue(row, column) {
         let inputBox = eval('l' + row)[column]
-        let fullArr = [1,2,3,4,5,6,7,8,9]
-        
-        if (firstOneInBlock(row, column)) {
-            blockNums = []
-        }
-
         let exclusiveArr = getUnavailableValue(row, column)
-
         let n = pick(exclusiveArr)
-
         inputBox.value = n
-        console.log(n,blockNums)
-        blockNums.push(n)
+        
+        let blockIndex = locateBlock(row,column)
+        let currentBlock = eval('arr'+blockIndex)
+        currentBlock.push(n)
+        return n;
     }
     function remove(arr, rest) {
         for (let i in rest) {
@@ -94,17 +126,27 @@ $(function () {
     }
 
     function pick(exclusiveArr) {
-        let arr = generateArray()
-        remove(arr,getUnavailableValue)
+        let arr = arr2string([1,2,3,4,5,6,7,8,9]);
+        remove(arr,exclusiveArr)
         let i = Math.floor(Math.random()*arr.length)
+        if(arr[i]==undefined){
+        }
         return arr[i]
     }
 
 
-    for (let r = 0; r < 9; r++) {
-        for (let c = 0; c < 9; c++) {
-            setValue(r, c)
+    var n = 1;
+    function start(){
+        for (let r = 0; r < 3; r++) {
+            for (let c = 0; c < 9; c++) {
+                let v = setValue(r, c)
+                if(typeof v == 'undefined'){
+                    console.log('n:',n++)
+                    break;
+                }
+            }
         }
     }
-
+    
+    start()
 })
