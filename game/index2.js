@@ -1,10 +1,10 @@
 $(function () {
     // init 9 array
     var arr = []
-    for(let i = 0;i<9;i++){
+    for (let i = 0; i < 9; i++) {
         let temp = [...Array(10).keys()]
         temp.shift()
-        let cut = temp.splice(0,i)
+        let cut = temp.splice(0, i)
         temp.push(...cut)
         arr[i] = temp
     }
@@ -24,8 +24,35 @@ $(function () {
 
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
-           let inputBox = eval('l' + r)[c]
-            inputBox.value = arr[r][c]
+            let inputBox = eval('l' + r)[c]
+
+            let t;
+            switch (r) {
+                case 1:
+                    t = 3;
+                    break;
+                case 2:
+                    t = 6;
+                    break;
+                case 3:
+                    t = 1;
+                    break;
+                case 5:
+                    t = 7;
+                    break;
+                case 6:
+                    t = 2;
+                    break;
+                case 7:
+                    t = 5;
+                    break;
+                case 8:
+                default:
+                    t = r;
+            }
+            // console.log("t:",r,t)
+
+            inputBox.value = arr[t][c]
         }
     }
 
