@@ -1,7 +1,14 @@
-#box{
-margin:50px;
-}
 
+#box{
+    text-align: center;
+    margin: 40px 20px;
+}
+#btnBox{
+    margin:20px;
+}
+button{
+    cursor: pointer;
+}
 .l{
     font-size: 0;
 }
@@ -28,7 +35,7 @@ margin:50px;
 }
 .l>span>input:hover{
     cursor: pointer;
-    background-color: rgb(190, 198, 212);
+    /* background-color:green; */
 }
 .l0>span, .l3>span, .l6>span{
     border-top:2px solid #344861
