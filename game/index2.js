@@ -17,12 +17,30 @@ $(function () {
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
             let inputBox = eval('l' + r)[c]
+            let originR = r;
+
+            if (r == 1) {
+                r = 3
+            } else if (r == 2) {
+                r = 6
+            } else if (r == 3) {
+                r = 1
+            } else if (r == 5) {
+                r = 7
+            } else if (r == 6) {
+                r = 2
+            } else if (r == 7) {
+                r = 5
+            }
+
             let i = r + c;
-            while(i>temp.length - 1){
+            while (i > temp.length - 1) {
                 i = i - 9
             }
-            console.log("i:",i)
+
             inputBox.value = temp[i]
+
+            r = originR
         }
     }
 
