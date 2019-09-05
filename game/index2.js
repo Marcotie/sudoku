@@ -66,11 +66,11 @@ $(function () {
     }
     let order1 =disorder(); // 横向
     console.log('1:',order1)
-    // let order2
+    let order2 = disorder();
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
             let inputBox = eval('l' + r)[c]
-            inputBox.value = arr[r][order1[c]]
+            inputBox.value = arr[order2[r]][order1[c]]
         }
     }
 })
