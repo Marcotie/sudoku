@@ -95,8 +95,11 @@ $(function () {
             for (let c = 0; c < 9; c++) {
                 let inputBox = eval('l' + r)[c]
                 if(emptyFlag(level)){
+                    console.log("inputBox",inputBox)
+                    $(inputBox).attr('readonly',false)
                     continue;
                 }
+                $(inputBox).css('color','green')
                 inputBox.value = arr[order2[r]][order1[c]]
             }
         }
@@ -107,5 +110,4 @@ $(function () {
         let level = $(this).attr('id');
         draw(level);
     })
-    $
 })
