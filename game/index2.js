@@ -37,10 +37,11 @@ $(function () {
                 i = i - 9
             }
 
-            arr[r][c] = temp[i]
+            arr[originR][c] = temp[i]
             r = originR
         }
     }
+    console.log("arr:",arr)
     // arr.
     function disorder(){
         let res
@@ -64,12 +65,12 @@ $(function () {
         return res;
     }
     let order1 =disorder(); // 横向
-    let order2 = disorder(); // 纵向
-    
+    console.log('1:',order1)
+    // let order2
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
             let inputBox = eval('l' + r)[c]
-            inputBox.value = arr[r][order[c]]
+            inputBox.value = arr[r][order1[c]]
         }
     }
 })
