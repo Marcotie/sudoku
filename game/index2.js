@@ -12,7 +12,8 @@ $(function () {
     var l7 = $(".l7>span>input")
     var l8 = $(".l8>span>input")
 
-
+    var arr;
+    var checkArr = [];
     function generateAll() {
         var i;
         var res = [[], [], [], [], [], [], [], [], []]
@@ -75,7 +76,7 @@ $(function () {
         let chance;
         switch (level) {
             case 'easy':
-                chance = 0.5;
+                chance = 0.9;
                 break;
             case 'middle':
                 chance = 0.4;
@@ -85,29 +86,71 @@ $(function () {
         }
         return Math.random() > chance
     }
-
+    function reset(){
+        $(':input').val('');
+        $("#clock").text('time: 0 s');
+    }
     function draw(level = 'easy'){
-        var arr = generateAll();
+        reset();
+        arr = generateAll();
+
         let order1 = disorder(); // 横向
         let order2 = disorder(); // 纵向
 
         for (let r = 0; r < 9; r++) {
             for (let c = 0; c < 9; c++) {
                 let inputBox = eval('l' + r)[c]
+                let v = arr[order2[r]][order1[c]]
+                checkArr.push(v)
+
                 if(emptyFlag(level)){
-                    console.log("inputBox",inputBox)
                     $(inputBox).attr('readonly',false)
                     continue;
                 }
                 $(inputBox).css('color','green')
-                inputBox.value = arr[order2[r]][order1[c]]
+                inputBox.value = v
             }
         }
     }
 
-
+    var clockInterval;
     $('#btnBox button').click(function(){
         let level = $(this).attr('id');
         draw(level);
+        let n =0;
+        clockInterval = setInterval(function(){
+            $("#clock").text('time:' + ++n + ' s');
+        }, 1000);
     })
+    $(':input').on('input',function(){
+        let v = $(this).val()
+        if(isNaN(v)){
+            $(this).val('')
+            return false;
+        }
+        console.log("v:",v,)
+       if(check()){
+           clearInterval(clockInterval);
+           let msg = "Congratulations!"
+           $("#msg").text(msg)
+       }
+    })
+
+    function check(){
+        let allInput = $(':input').map(function(idx,elem){
+            return $(elem).val();
+        }).get();
+        let filterArr = allInput.filter(item =>{
+            return item!=''
+        })
+        if(filterArr.length<81){
+            return false;
+        }
+        for(let i = 0;i<filterArr.length;i++){
+            if(filterArr[i]==checkArr[i]){
+                return false;
+            }
+        }
+        return true;   
+    }
 })

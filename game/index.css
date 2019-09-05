@@ -51,3 +51,8 @@ button{
 .l>span:nth-child(3), .l>span:nth-child(6){
     border-right: 2px solid #344861
 }
+
+#msg{
+    font-size: 30px;
+    font-weight: bold;
+}
