@@ -128,7 +128,11 @@ $(function () {
             $(this).val('')
             return false;
         }
-        console.log("v:",v,)
+        
+        if(v.toString().length>0){
+            v = v.toString().slice(-1)
+        }
+        $(this).val(v)
        if(check()){
            clearInterval(clockInterval);
            let msg = "Congratulations!"
@@ -147,7 +151,8 @@ $(function () {
             return false;
         }
         for(let i = 0;i<filterArr.length;i++){
-            if(filterArr[i]==checkArr[i]){
+            if(filterArr[i]!=checkArr[i]){
+                $('#msg').text('第 '+i +'个空里边，值'+ filterArr[i]+ ' 不对')
                 return false;
             }
         }
