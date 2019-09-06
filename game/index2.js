@@ -115,6 +115,7 @@ $(function () {
 
     var clockInterval;
     $('#btnBox button').click(function(){
+        clearInterval(clockInterval);
         let level = $(this).attr('id');
         draw(level);
         let n =0;
