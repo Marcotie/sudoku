@@ -17,7 +17,8 @@ play: https://emilytimer.github.io/sudoku/
 再将3个九宫格乱序，如7-9放最前面，1-3次之，4-6再次之。
 - 纵向：同理
 
-将乱序后的数组记录为`answer`数组，用于最终验证
+将乱序后的数组记录为`answer`数组，用于最终验证。
+
 乱序效果如下：
 ![nQ5QZn.png](https://s2.ax1x.com/2019/09/07/nQ5QZn.png)
 ### 随机留空
@@ -38,8 +39,7 @@ play: https://emilytimer.github.io/sudoku/
         return Math.random() > chance
     }
 ```
-`easy`模式，40%的单元格是空的
-`hard`模式，70%的单元格是空的
+`easy`模式，40%的单元格是空的，`hard`模式，70%的单元格是空的
 ![nQfbQJ.png](https://s2.ax1x.com/2019/09/07/nQfbQJ.png)
 ### 用户输入
 ```javascript
