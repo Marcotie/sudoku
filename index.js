@@ -1,6 +1,5 @@
 $(function () {
-    let temp = [...Array(10).keys()]
-    temp.shift()   // [1,2,3,4,5,6,7,8,9]
+    let temp = [1,2,3,4,5,6,7,8,9]
     //
     var l0 = $(".l0>span>input")
     var l1 = $(".l1>span>input")
@@ -13,9 +12,12 @@ $(function () {
     var l8 = $(".l8>span>input")
 
     var checkArr = []; // 完整的数组
-
+    var score = 0;
+    var record = Number(localStorage.getItem('record'));
+    if(record){
+        $('#record').text(n2time(record))
+    }
     function generateAll() {
-        var i;
         var res = [[], [], [], [], [], [], [], [], []]
 
         for (let r = 0; r < 9; r++) {
@@ -76,7 +78,7 @@ $(function () {
         let chance;
         switch (level) {
             case 'easy':
-                chance = 0.7;
+                chance = 0.95;
                 break;
             case 'middle':
                 chance = 0.5;
@@ -89,6 +91,8 @@ $(function () {
     function reset(){
         $(':input').val('');
         $("#clock").text('00:00');
+        checkArr = [];
+        score = 0;
     }
     function draw(level = 'easy'){
         reset();
@@ -104,40 +108,46 @@ $(function () {
                 checkArr.push(v)
 
                 if(emptyFlag(level)){
+                    $(inputBox).css('color','black')
                     $(inputBox).attr('readonly',false)
                     continue;
+                }else{
+                    $(inputBox).css('color','green')
+                    inputBox.value = v
                 }
-                $(inputBox).css('color','green')
-                inputBox.value = v
+
             }
         }
     }
 
     var clockInterval;
     $('#btnBox button').click(function(){
-        $('#msg').text('')
         $('.l span').removeClass('error')
-
         clearInterval(clockInterval);
         let level = $(this).attr('id');
         draw(level);
-        let n =0;
+
         clockInterval = setInterval(function(){
-            let costTime = ++n;
-            let minutes = Math.floor(costTime / 60);
-            let seconds = costTime % 60;
-            if(seconds<10){
-                seconds = '0'+seconds;
-            }
-            let showTime = '';
-            if(minutes > 0){
-                showTime = minutes+':'+seconds
-            }else{
-                showTime = '00:'+seconds
-            }
-            $("#clock").text(showTime);
+            score++;
+            let time = n2time(score);
+            $("#clock").text(time);
         }, 1000);
     })
+    function n2time(n){
+        if(typeof n !='number'){return false}
+        let res = '';
+        let minutes = Math.floor(n / 60);
+        let seconds = n % 60;
+        if(seconds<10){
+            seconds = '0'+seconds;
+        }
+        if(minutes > 0){
+            res = minutes+':'+seconds
+        }else{
+            res = '00:'+seconds
+        }
+        return res;
+    }
     $(':input').on('input',function(){
         let v = $(this).val()
         if(isNaN(v)){
@@ -181,7 +191,6 @@ $(function () {
         }
     })
     $('#check').click(function(){
-        $('#msg').text('')
         $('.l span').removeClass('error')
 
         let allInput = $(':input').map(function(idx,elem){
@@ -198,8 +207,14 @@ $(function () {
         let errorArr = checkFn(filterArr)
         if(errorArr.length == 0){
             clearInterval(clockInterval);
-            let msg = "Congratulations!"
-            $("#msg").text(msg)
+            let msg = 'Success!';
+            if(score < record){
+                let newRecord = n2time(score);
+                msg+='打破记录啦，最快用时'+newRecord;
+               $('#record').text(newRecord)
+            }
+            localStorage.setItem('record',score);
+            alert(msg);
         }else{
             showErrorBlock(errorArr)
         }
@@ -216,9 +231,6 @@ $(function () {
     }
     function showErrorBlock(arr){
         for(let i = 0, x = arr[i];i<arr.length;i++){
-            let row = Math.floor(arr[i] / 9)
-            let colomn = arr[i] % 9
-            // let errorBlock = eval('l' + row)[colomn]
             let errorBlock = number2dom(arr[i])
             $(errorBlock).parent().addClass('error')
         }
@@ -231,5 +243,4 @@ $(function () {
         let colomn = n % 9
         return eval('l' + row)[colomn]
     }
-
 })
