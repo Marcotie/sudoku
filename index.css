@@ -9,6 +9,14 @@
 button{
     cursor: pointer;
 }
+#clockBox{
+    margin:20px;
+}
+#clock{
+    display: inline-block;
+    width:100px;
+    text-align: left;
+}
 .l{
     font-size: 0;
 }
@@ -55,4 +63,7 @@ button{
 #msg{
     font-size: 30px;
     font-weight: bold;
+}
+.error{
+    border-color: red!important;
 }

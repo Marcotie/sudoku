@@ -12,8 +12,8 @@ $(function () {
     var l7 = $(".l7>span>input")
     var l8 = $(".l8>span>input")
 
-    var arr;
-    var checkArr = [];
+    var checkArr = []; // 完整的数组
+
     function generateAll() {
         var i;
         var res = [[], [], [], [], [], [], [], [], []]
@@ -76,7 +76,7 @@ $(function () {
         let chance;
         switch (level) {
             case 'easy':
-                chance = 0.6;
+                chance = 0.95;
                 break;
             case 'middle':
                 chance = 0.5;
@@ -92,7 +92,7 @@ $(function () {
     }
     function draw(level = 'easy'){
         reset();
-        arr = generateAll();
+        let arr = generateAll();
 
         let order1 = disorder(); // 横向
         let order2 = disorder(); // 纵向
@@ -134,14 +134,11 @@ $(function () {
             v = v.toString().slice(-1)
         }
         $(this).val(v)
-       if(check()){
-           clearInterval(clockInterval);
-           let msg = "Congratulations!"
-           $("#msg").text(msg)
-       }
-    })
 
-    function check(){
+    })
+    $('#check').click(function(){
+        $('#msg').text('')
+        $('.l span').removeClass('error')
         let allInput = $(':input').map(function(idx,elem){
             return $(elem).val();
         }).get();
@@ -149,14 +146,34 @@ $(function () {
             return item!=''
         })
         if(filterArr.length<81){
+            alert('填满才能check哦')
             return false;
         }
-        for(let i = 0;i<filterArr.length;i++){
-            if(filterArr[i]!=checkArr[i]){
-                $('#msg').text('第 '+i +'个空里边，值'+ filterArr[i]+ ' 不对')
-                return false;
+        let errorArr = checkFn(filterArr)
+        if(errorArr.length == 0){
+            clearInterval(clockInterval);
+            let msg = "Congratulations!"
+            $("#msg").text(msg)
+        }else{
+            showErrorBlock(errorArr)
+        }
+    })
+
+    function checkFn(userInputArr){
+        let res = [];
+        for(let i = 0;i<userInputArr.length;i++){
+            if(userInputArr[i]!=checkArr[i]){
+                res.push(i)
             }
         }
-        return true;   
+        return res;   
+    }
+    function showErrorBlock(arr){
+        for(let i = 0, x = arr[i];i<arr.length;i++){
+            let row = Math.floor(arr[i] / 9)
+            let colomn = arr[i] % 9
+            let errorBlock = eval('l' + row)[colomn]
+            $(errorBlock).parent().addClass('error')
+        }
     }
 })
