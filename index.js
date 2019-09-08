@@ -78,7 +78,7 @@ $(function () {
         let chance;
         switch (level) {
             case 'easy':
-                chance = 0.95;
+                chance = 0.7;
                 break;
             case 'middle':
                 chance = 0.5;
