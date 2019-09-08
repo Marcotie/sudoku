@@ -76,7 +76,7 @@ $(function () {
         let chance;
         switch (level) {
             case 'easy':
-                chance = 0.95;
+                chance = 0.7;
                 break;
             case 'middle':
                 chance = 0.5;
@@ -149,7 +149,7 @@ $(function () {
             alert('填满才能check哦')
             return false;
         }
-        
+
         $('.l span').removeClass('error')
         let errorArr = checkFn(filterArr)
         if(errorArr.length == 0){
