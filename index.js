@@ -116,6 +116,8 @@ $(function () {
     var clockInterval;
     $('#btnBox button').click(function(){
         $('#msg').text('')
+        $('.l span').removeClass('error')
+
         clearInterval(clockInterval);
         let level = $(this).attr('id');
         draw(level);
@@ -139,6 +141,8 @@ $(function () {
     })
     $('#check').click(function(){
         $('#msg').text('')
+        $('.l span').removeClass('error')
+
         let allInput = $(':input').map(function(idx,elem){
             return $(elem).val();
         }).get();
@@ -150,7 +154,6 @@ $(function () {
             return false;
         }
 
-        $('.l span').removeClass('error')
         let errorArr = checkFn(filterArr)
         if(errorArr.length == 0){
             clearInterval(clockInterval);
