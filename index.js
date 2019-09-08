@@ -88,7 +88,7 @@ $(function () {
     }
     function reset(){
         $(':input').val('');
-        $("#clock").text('time: 0 s');
+        $("#clock").text('00:00');
     }
     function draw(level = 'easy'){
         reset();
@@ -123,7 +123,19 @@ $(function () {
         draw(level);
         let n =0;
         clockInterval = setInterval(function(){
-            $("#clock").text('time:' + ++n + ' s');
+            let costTime = ++n;
+            let minutes = Math.floor(costTime / 60);
+            let seconds = costTime % 60;
+            if(seconds<10){
+                seconds = '0'+seconds;
+            }
+            let showTime = '';
+            if(minutes > 0){
+                showTime = minutes+':'+seconds
+            }else{
+                showTime = '00:'+seconds
+            }
+            $("#clock").text(showTime);
         }, 1000);
     })
     $(':input').on('input',function(){
