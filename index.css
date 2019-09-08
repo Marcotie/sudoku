@@ -67,3 +67,7 @@ button{
 .error{
     border-color: red!important;
 }
+#instruction p{
+    margin:20px 60px;
+    
+}
