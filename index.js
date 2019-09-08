@@ -139,6 +139,35 @@ $(function () {
         $(this).val(v)
 
     })
+    $(':input').on('keyup',function(e){
+        let key = e.which;
+        let dom = $(this);
+        if(key == 38){ // 上
+            let index = $('.l input').index(this)
+            let upper = index - 9
+            if(upper<0){
+                return false;
+            }
+            dom = number2dom(upper)
+        }
+        if(key == 40){ // 下
+            let index = $('.l input').index(this)
+            let lower = index + 9
+            if(lower<0){
+                return false;
+            }
+            dom = number2dom(lower)
+        }
+        if(key == 37){ // 左
+            dom = $(this).parent().prev().children()
+        }
+        if(key == 39){ // 右
+            dom = $(this).parent().next().children()
+        }
+        if(dom){
+            dom.focus();
+        }
+    })
     $('#check').click(function(){
         $('#msg').text('')
         $('.l span').removeClass('error')
@@ -177,8 +206,18 @@ $(function () {
         for(let i = 0, x = arr[i];i<arr.length;i++){
             let row = Math.floor(arr[i] / 9)
             let colomn = arr[i] % 9
-            let errorBlock = eval('l' + row)[colomn]
+            // let errorBlock = eval('l' + row)[colomn]
+            let errorBlock = number2dom(arr[i])
             $(errorBlock).parent().addClass('error')
         }
     }
+    function number2dom(n){
+        if(n < 0 || n > 80){
+            return false;
+        }
+        let row = Math.floor(n / 9)
+        let colomn = n % 9
+        return eval('l' + row)[colomn]
+    }
+
 })
