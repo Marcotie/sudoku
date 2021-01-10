@@ -1,7 +1,7 @@
 
-repo: https://github.com/emilytimer/sudoku
+repo: https://github.com/marcoAtom/sudoku
 
-play: https://emilytimer.github.io/sudoku/
+play: https://marcoAtom.github.io/sudoku/
 
 ### 规则
 玩家需要根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫（3*3）内的数字均含1-9，不重复。
